@@ -33,7 +33,7 @@ def record_user(args):
         traj_states = []
         traj_actions = []
         done = False
-        current_state = torch.from_numpy(env.reset()[0]).float()
+        current_state, _ = env.reset()
         # Repeat until terminated
         while not done:
             env.render()
@@ -49,7 +49,7 @@ def record_user(args):
             traj_states.append(torch.from_numpy(current_state).float())
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
-            current_state = torch.from_numpy(obs).float()
+            current_state = obs
             clock.tick(15)
         states += traj_states
         actions += traj_actions

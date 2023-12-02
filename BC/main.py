@@ -45,7 +45,7 @@ def experiment(args):
         epoch_losses.append(loss / len(dataloader))
     # Saving policy
     outdir = args.policy_save_dir
-    if not os.path.exists(args.outdir):
+    if not os.path.exists(args.policy_save_dir):
         os.makedirs(outdir)
     policy_save_path = os.path.join(outdir, f"{ENV_NAME}.pt")
     learner.save(policy_save_path)
