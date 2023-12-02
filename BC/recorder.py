@@ -33,7 +33,7 @@ def record_user(args):
         traj_states = []
         traj_actions = []
         done = False
-        current_state, _ = env.reset()
+        current_state = torch.from_numpy(env.reset()[0]).float()
         # Repeat until terminated
         while not done:
             env.render()
@@ -46,17 +46,17 @@ def record_user(args):
                         (event.key == pygame.K_SPACE or event.key == pygame.K_UP)):
                     action = 1
             # Save current state, action pair and take user's action
-            traj_states.append(torch.from_numpy(current_state))
+            traj_states.append(torch.from_numpy(current_state).float())
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
-            current_state = obs
+            current_state = torch.from_numpy(obs).float()
             clock.tick(15)
         states += traj_states
         actions += traj_actions
     # Create output directory if it does not exist
     outdir = args.data_directory
     if not os.path.exists(outdir):
-            os.makedirs(ddir)
+        os.makedirs(ddir)
     # Make state and action tensors for saving
     state_tensor = torch.stack(states)
     action_tensor = torch.stack(actions)
