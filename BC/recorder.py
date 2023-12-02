@@ -17,8 +17,7 @@ def get_args():
     # Number of times to run game
     parser.add_argument("--n_trajs", type=int, default=1,
         help="Number of times to run game.")
-    args = parser.parse_args()
-    return args
+    return parser.parse_args()
 
 
 # Run Flappy Bird and record user's actions
