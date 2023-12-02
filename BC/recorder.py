@@ -6,6 +6,7 @@ import os
 import pygame
 import torch
 from dataset import ExpertData, ExpertDataset
+import getch
 
 
 # Get arguments to run the code
@@ -37,20 +38,15 @@ def record_user(args):
         # Repeat until terminated
         while not done:
             env.render()
-            # Get user's action
-            action = 0
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                if (event.type == pygame.KEYDOWN and
-                        (event.key == pygame.K_SPACE or event.key == pygame.K_UP)):
-                    action = 1
+            # Set action to go up if user presses space bar or up key
+            keys = pygame.key.get_pressed()
+            action = 1 if keys[pygame.K_SPACE] or keys[pygame.K_UP] else 0
             # Save current state, action pair and take user's action
             traj_states.append(torch.from_numpy(current_state).float())
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
             current_state = obs
-            clock.tick(15)
+            clock.tick(50)
         states += traj_states
         actions += traj_actions
     # Create output directory if it does not exist
