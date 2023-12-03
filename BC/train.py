@@ -6,10 +6,17 @@ import flappy_bird_gymnasium
 import argparse
 from tqdm import tqdm
 import os
+import matplotlib.pyplot as plt
 
 
 ENV_NAME = "FlappyBird-v0"
 
+def plot_loss(epochs, losses, title):
+    plt.plot(epochs, losses)
+    plt.title(title)
+    plt.xlabel('epochs')
+    plt.ylabel('loss')
+    plt.show()
 
 # Arguments
 def get_args():
@@ -26,6 +33,7 @@ def get_args():
         help="Directory to save learned policies")
     # Number of tests to run when calling test.py
     parser.add_argument("--n_tests", type=int, default=10, help="Number of tests to run")
+    parser.add_argument("--plot_loss", type=bool, default=0, help="Plot epoch losses after training is complete")
     return parser.parse_args()
 
 
@@ -55,6 +63,9 @@ def experiment(args):
     policy_save_path = os.path.join(outdir, f"{ENV_NAME}.pt")
     learner.save(policy_save_path)
 
+    if args.plot_loss == True:
+        epochs = np.arange(1, args.epochs + 1)
+        plot_loss(epochs, epoch_losses, "BC epoch losses")
 
 # Main
 if __name__ == "__main__":
