@@ -15,7 +15,7 @@ def get_args():
         help="Directory to store expert data.")
     parser.add_argument("--data_name", type=str, default=None, help="Name of output file.")
     # Number of times to run game
-    parser.add_argument("--n_trajs", type=int, default=1,
+    parser.add_argument("--n_games", type=int, default=1,
         help="Number of times to run game.")
     return parser.parse_args()
 
@@ -29,7 +29,7 @@ def record_user(args):
     states = []
     actions = []
     # Iterate over the number of trajectories to collect
-    for _ in range(args.n_trajs):
+    for _ in range(args.n_games):
         traj_states = []
         traj_actions = []
         done = False

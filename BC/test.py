@@ -1,7 +1,7 @@
 import flappy_bird_gymnasium
 import gymnasium
 from learner import *
-from main import get_args
+from train import get_args
 
 
 ENV_NAME = "FlappyBird-v0"
