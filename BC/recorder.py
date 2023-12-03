@@ -10,9 +10,10 @@ from dataset import ExpertData, ExpertDataset
 # Get arguments to run the code
 def get_args():
     parser = argparse.ArgumentParser()
-    # Output directory
+    # Output parameters
     parser.add_argument("--data_directory", type=str, default="./expert_data/",
-        help="Directory to store expert policies.")
+        help="Directory to store expert data.")
+    parser.add_argument("--data_name", type=str, default=None, help="Name of output file.")
     # Number of times to run game
     parser.add_argument("--n_trajs", type=int, default=1,
         help="Number of times to run game.")
@@ -47,17 +48,20 @@ def record_user(args):
             clock.tick(50)
         states += traj_states
         actions += traj_actions
+    # Make state and action tensors for saving
+    state_tensor = torch.stack(states)
+    action_tensor = torch.stack(actions)
+    # Make the states and actions an ExpertDataset class
+    dataset = ExpertDataset(ExpertData(state_tensor, action_tensor))
     # Create output directory if it does not exist
     outdir = args.data_directory
     if not os.path.exists(outdir):
         os.makedirs(outdir)
-    # Make state and action tensors for saving
-    state_tensor = torch.stack(states)
-    action_tensor = torch.stack(actions)
-    # Make the states and actions an ExpertDataset class and save them
-    dataset = ExpertDataset(ExpertData(state_tensor, action_tensor)) 
-    name = env.spec.id
-    torch.save(dataset, f"{outdir}/{name}_dataset.pt")
+    # Get name of output file and save expert data
+    name = args.data_name
+    if not name:
+        name = env.spec.id + "_dataset"
+    torch.save(dataset, f"{outdir}/{name}.pt")
 
 
 # Main
