@@ -36,7 +36,6 @@ def record_user(args):
         current_state, _ = env.reset()
         # Repeat until terminated
         while not done:
-            env.render()
             # Set action to go up if user presses space bar or up key
             keys = pygame.key.get_pressed()
             action = 1 if keys[pygame.K_SPACE] or keys[pygame.K_UP] else 0
@@ -45,7 +44,6 @@ def record_user(args):
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
             current_state = obs
-            clock.tick(50)
         states += traj_states
         actions += traj_actions
     # Make state and action tensors for saving
