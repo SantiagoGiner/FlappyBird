@@ -1,4 +1,9 @@
+gymnasium
 flappy-bird-gymnasium
 stable-baselines3
+numpy
 matplotlib
 opencv-python
+argparse
+torch
+

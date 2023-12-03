@@ -1,12 +1,10 @@
 import flappy_bird_gymnasium
 import gymnasium
 import argparse
-import numpy as np
 import os
 import pygame
 import torch
 from dataset import ExpertData, ExpertDataset
-import getch
 
 
 # Get arguments to run the code
