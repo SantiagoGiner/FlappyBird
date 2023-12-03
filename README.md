@@ -12,8 +12,11 @@ To get started, run:
 In this section, we have implemented the behavioral cloning (BC) algorithm for imitation learning. The code will record the user's actions while playing Flappy Bird and learn a policy based on those actions. To do this, first run
 * `cd ./BC/`
 * `python record.py`
+
 This will open a pop-up window with Flappy Bird. Happy playing! You can modify the number of games to play with the `--n_games` argument to `record.py`. Once this is done, you can train the model by running
 * `python train.py`
+
 Lastly, test the model by running
 * `python test.py`
+
 This will automatically run 10 tests, but you can modify the number of tests with the `--n_tests` argument to `test.py`.
