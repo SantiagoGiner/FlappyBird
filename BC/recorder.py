@@ -52,7 +52,7 @@ def record_user(args):
     # Create output directory if it does not exist
     outdir = args.data_directory
     if not os.path.exists(outdir):
-        os.makedirs(ddir)
+        os.makedirs(outdir)
     # Make state and action tensors for saving
     state_tensor = torch.stack(states)
     action_tensor = torch.stack(actions)
