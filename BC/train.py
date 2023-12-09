@@ -22,7 +22,7 @@ def get_args():
     parser.add_argument("--epochs", type=int, default=200, help="Number of training epochs")
     parser.add_argument("--lr", type=float, default=0.001, help="Learning rate")
     parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
-    parser.add_argument("--num_dataset_samples", type=int, default=10000, help="Number of samples to start dataset off with")
+    parser.add_argument("--num_dataset_samples", type=int, default=1000, help="Number of samples to start dataset off with")
     # Output directory
     parser.add_argument("--policy_save_dir", type=str, default="./learned_policies",
         help="Directory to save learned policies")
