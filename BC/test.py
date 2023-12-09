@@ -43,8 +43,18 @@ def test(args):
         # Save test length and reward
         lengths.append(length)
         rewards.append(reward)
+    # Print the mean episode length and rewards
     print(f"Average episode length: {np.mean(lengths)}")
     print(f"Average reward incurred: {np.mean(rewards)}")
+    # Save the episode lengths and rewards if requested
+    results_dir = args.results_dir
+    if results_dir:
+        if not os.path.exists(results_dir):
+            os.makedirs(results_dir)
+        np.save(
+            os.path.join(results_dir, f"{args.results_name}.npy"),
+            np.concatenate([lengths, rewards])
+        )
 
 
 # Main

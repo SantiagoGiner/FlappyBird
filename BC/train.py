@@ -18,6 +18,7 @@ def get_args():
     parser = argparse.ArgumentParser(description="Behavioral cloning")
     # Data directory
     parser.add_argument("--data_dir", default='./expert_data', help="Directory with expert data")
+    parser.add_argument("--data_name", type=str, default=None, help="Name of output file")
     # Learning arguments
     parser.add_argument("--epochs", type=int, default=200, help="Number of training epochs")
     parser.add_argument("--lr", type=float, default=0.001, help="Learning rate")
@@ -29,16 +30,21 @@ def get_args():
     # Arguments for loss plotting
     parser.add_argument("--plot_dir", type=str, default=None, help="Directory to store training loss plot")
     parser.add_argument("--plot_name", type=str, default="BC_losses", help="Name of training loss plot")
-    # Number of tests to run when calling test.py
+    # Arguments for testing
     parser.add_argument("--n_tests", type=int, default=10, help="Number of tests to run")
     parser.add_argument("--hide_game", action="store_true", help="Hide the game window when testing")
+    parser.add_argument("--results_dir", type=str, default=None, help="Directory in which to store test results")
+    parser.add_argument("--results_name", type=str, default="BC_results", help="Name of file for storing results")
     return parser.parse_args()
 
 
 # Learning through behavioral cloning (BC)
 def experiment(args):
     # Get expert data
-    save_path = os.path.join(args.data_dir, f"{ENV_NAME}_dataset.pt")
+    if not args.data_name:
+        save_path = os.path.join(args.data_dir, f"{ENV_NAME}_dataset.pt")
+    else:
+        save_path = os.path.join(args.data_dir, f"{args.data_name}.pt")
     expert_dataset = torch.load(save_path)
     # Create environment
     env = gymnasium.make(ENV_NAME)

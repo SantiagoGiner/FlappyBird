@@ -13,12 +13,12 @@ from tqdm import tqdm
 def get_args():
     parser = argparse.ArgumentParser()
     # Output parameters
-    parser.add_argument("--data_directory", type=str, default="./expert_data/",
-        help="Directory to store expert data.")
-    parser.add_argument("--data_name", type=str, default=None, help="Name of output file.")
+    parser.add_argument("--data_dir", type=str, default="./expert_data/", help="Directory to store expert data")
+    parser.add_argument("--data_name", type=str, default=None, help="Name of output file")
     # Number of times to run game
     parser.add_argument("--n_games", type=int, default=1,
-        help="Number of times to run game.")
+        help="Number of times to run game")
+    # Use model trained with PPO as expert demonstration
     parser.add_argument("--use_ppo_model", action="store_true",
         help="Use a ppo trained model instead of recording an expert demo")
     return parser.parse_args()
@@ -63,7 +63,7 @@ def record_user(args):
     # Make the states and actions an ExpertDataset class
     dataset = ExpertDataset(ExpertData(state_tensor, action_tensor))
     # Create output directory if it does not exist
-    outdir = args.data_directory
+    outdir = args.data_dir
     if not os.path.exists(outdir):
         os.makedirs(outdir)
     # Get name of output file and save expert data
