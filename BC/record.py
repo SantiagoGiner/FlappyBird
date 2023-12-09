@@ -7,6 +7,7 @@ import torch
 from dataset import ExpertData, ExpertDataset
 from stable_baselines3 import PPO
 
+
 # Get arguments to run the code
 def get_args():
     parser = argparse.ArgumentParser()
@@ -17,20 +18,21 @@ def get_args():
     # Number of times to run game
     parser.add_argument("--n_games", type=int, default=1,
         help="Number of times to run game.")
-    parser.add_argument("--use_ppo_model", type=int, default=0,
+    parser.add_argument("--use_ppo_model", action="store_true",
         help="Use a ppo trained model instead of recording an expert demo")
     return parser.parse_args()
 
 
 # Run Flappy Bird and record user's or model's actions
 def record_user(args):
-    use_ppo_model = args.use_ppo_model == True
-    if use_ppo_model:
+    # Make the environment
+    if args.use_ppo_model:
         env = gymnasium.make("FlappyBird-v0")
-        model = PPO.load("./../ppo/ppo_flappybird")
+        model = PPO.load("../ppo/ppo_flappybird")
     else:
         env = gymnasium.make("FlappyBird-v0", render_mode="human")
-    # Make the environment
+    # Pygame clock object
+    clock = pygame.time.Clock()
     # Arrays in which to save user's states and actions
     states = []
     actions = []
@@ -43,18 +45,18 @@ def record_user(args):
         current_state, _ = env.reset()
         # Repeat until terminated
         while not done:
-            if use_ppo_model:
+            if args.use_ppo_model:
                 action = model.predict(current_state)[0]
             else:
                 # Set action to go up if user presses space bar or up key
                 keys = pygame.key.get_pressed()
                 action = 1 if keys[pygame.K_SPACE] or keys[pygame.K_UP] else 0
-                #action = torch.tensor(action).reshape(1)
             # Save current state, action pair and take the desired action
             traj_states.append(torch.from_numpy(current_state).float())
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
             current_state = obs
+            clock.tick(20)
         states += traj_states
         actions += traj_actions
     # Make state and action tensors for saving
