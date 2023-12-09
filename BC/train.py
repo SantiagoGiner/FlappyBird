@@ -7,16 +7,11 @@ import argparse
 from tqdm import tqdm
 import os
 import matplotlib.pyplot as plt
+plt.style.use("./paper.mplstyle")
 
 
 ENV_NAME = "FlappyBird-v0"
 
-def plot_loss(epochs, losses, title):
-    plt.plot(epochs, losses)
-    plt.title(title)
-    plt.xlabel('epochs')
-    plt.ylabel('loss')
-    plt.show()
 
 # Arguments
 def get_args():
@@ -33,7 +28,7 @@ def get_args():
         help="Directory to save learned policies")
     # Number of tests to run when calling test.py
     parser.add_argument("--n_tests", type=int, default=10, help="Number of tests to run")
-    parser.add_argument("--plot_loss", type=bool, default=0, help="Plot epoch losses after training is complete")
+    parser.add_argument("--plot_dir", type=str, default=None, help="Directory to store training loss plot")
     return parser.parse_args()
 
 
@@ -58,14 +53,22 @@ def experiment(args):
         epoch_losses.append(loss / len(dataloader))
     # Save the learned policy
     outdir = args.policy_save_dir
-    if not os.path.exists(args.policy_save_dir):
+    if not os.path.exists(outdir):
         os.makedirs(outdir)
     policy_save_path = os.path.join(outdir, f"{ENV_NAME}.pt")
     learner.save(policy_save_path)
-
-    if args.plot_loss == True:
+    # Plot the losses, if requested
+    loss_dir = args.plot_dir
+    if loss_dir:
+        if not os.path.exists(loss_dir):
+            os.makedirs(loss_dir)
         epochs = np.arange(1, args.epochs + 1)
-        plot_loss(epochs, epoch_losses, "BC epoch losses")
+        plt.plot(epochs, epoch_losses)
+        plt.title("BC Training Losses")
+        plt.xlabel("Epoch")
+        plt.ylabel("Loss")
+        plt.savefig(os.path.join(loss_dir, f"BC_losses.png"))
+        plt.show()
 
 # Main
 if __name__ == "__main__":

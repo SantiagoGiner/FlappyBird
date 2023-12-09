@@ -13,7 +13,7 @@ In this section, we have implemented the behavioral cloning (BC) algorithm for i
 * `cd ./BC/`
 * `python record.py`
 
-This will open a pop-up window with Flappy Bird. Happy playing! You can modify the number of games to play with the `--n_games` argument to `record.py`.You can also record the actions of a pre-trained PPO model by specifying `--use_ppo_model=1`. Once this is done, you can train the model by running
+This will open a pop-up window with Flappy Bird. Happy playing! You can modify the number of games to play with the `--n_games` argument to `record.py`.You can also record the actions of a pre-trained PPO model by specifying `--use_ppo_model`. Once this is done, you can train the model by running
 * `python train.py`
 
 Lastly, test the model by running
