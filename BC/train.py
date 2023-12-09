@@ -26,9 +26,12 @@ def get_args():
     # Output directory
     parser.add_argument("--policy_save_dir", type=str, default="./learned_policies",
         help="Directory to save learned policies")
+    # Arguments for loss plotting
+    parser.add_argument("--plot_dir", type=str, default=None, help="Directory to store training loss plot")
+    parser.add_argument("--plot_name", type=str, default="BC_losses", help="Name of training loss plot")
     # Number of tests to run when calling test.py
     parser.add_argument("--n_tests", type=int, default=10, help="Number of tests to run")
-    parser.add_argument("--plot_dir", type=str, default=None, help="Directory to store training loss plot")
+    parser.add_argument("--hide_game", action="store_true", help="Hide the game window when testing")
     return parser.parse_args()
 
 
@@ -67,8 +70,7 @@ def experiment(args):
         plt.title("BC Training Losses")
         plt.xlabel("Epoch")
         plt.ylabel("Loss")
-        plt.savefig(os.path.join(loss_dir, f"BC_losses.png"))
-        plt.show()
+        plt.savefig(os.path.join(loss_dir, f"{args.plot_name}.png"))
 
 # Main
 if __name__ == "__main__":

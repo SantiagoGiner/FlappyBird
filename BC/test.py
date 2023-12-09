@@ -10,7 +10,10 @@ ENV_NAME = "FlappyBird-v0"
 # Test the learned policy
 def test(args):
     # Make the environment
-    env = gymnasium.make(ENV_NAME, render_mode="human")
+    if args.hide_game:
+        env = gymnasium.make(ENV_NAME)
+    else:
+        env = gymnasium.make(ENV_NAME, render_mode="human")
     state_dim = env.observation_space.shape[0]
     action_dim = env.action_space.n
     # Make a BC class and give it the learned policy
