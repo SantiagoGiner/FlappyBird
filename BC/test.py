@@ -30,7 +30,6 @@ def test(args):
         # Repeat until episode terminates
         while not done:
             # Render the game and get action from learned policy
-            env.render()
             qs = model.get_logits(torch.from_numpy(current_state).float()) 
             action = qs.argmax().numpy()
             # Carry out the policy's action and keep track of length and reward

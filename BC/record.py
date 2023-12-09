@@ -37,8 +37,7 @@ def record_user(args):
     actions = []
 
     # Iterate over the number of trajectories to collect
-    for n in tqdm(range(args.n_games)):
-        print(f"Starting game {n + 1}...")
+    for _ in tqdm(range(args.n_games)):
         traj_states = []
         traj_actions = []
         done = False
