@@ -1,3 +1,4 @@
+import numpy as np
 import flappy_bird_gymnasium
 import gymnasium
 import argparse
@@ -37,11 +38,13 @@ def record_user(args):
     actions = []
 
     # Iterate over the number of trajectories to collect
+    lengths, rewards = [], []
     for _ in tqdm(range(args.n_games)):
         traj_states = []
         traj_actions = []
         done = False
         current_state, _ = env.reset()
+        l, r = 0, 0
         # Repeat until terminated
         while not done:
             if args.use_ppo_model:
@@ -55,8 +58,12 @@ def record_user(args):
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
             current_state = obs
+            l += 1
+            r += reward
         states += traj_states
         actions += traj_actions
+        lengths.append(l)
+        rewards.append(r)
     # Make state and action tensors for saving
     state_tensor = torch.stack(states)
     action_tensor = torch.stack(actions)
@@ -71,6 +78,8 @@ def record_user(args):
     if not name:
         name = env.spec.id + "_dataset"
     torch.save(dataset, f"{outdir}/{name}.pt")
+    print(f"Average episode length: {np.mean(lengths)}")
+    print(f"Average reward incurred: {np.mean(rewards)}")
 
 
 # Main

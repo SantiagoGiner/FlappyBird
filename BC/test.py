@@ -21,8 +21,7 @@ def test(args):
     policy_save_path = os.path.join(args.policy_save_dir, f"{ENV_NAME}.pt")
     model.load(policy_save_path)
     # Arrays to store episode lengths and rewards
-    lengths = []
-    rewards = []
+    lengths, rewards = [], []
     # Run the tests
     for _ in range(args.n_tests):
         # Initialize tracking of state and episode information
