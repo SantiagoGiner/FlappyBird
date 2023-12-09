@@ -6,6 +6,7 @@ import pygame
 import torch
 from dataset import ExpertData, ExpertDataset
 from stable_baselines3 import PPO
+from tqdm import tqdm
 
 
 # Get arguments to run the code
@@ -31,14 +32,13 @@ def record_user(args):
         model = PPO.load("../ppo/ppo_flappybird")
     else:
         env = gymnasium.make("FlappyBird-v0", render_mode="human")
-    # Pygame clock object
-    clock = pygame.time.Clock()
     # Arrays in which to save user's states and actions
     states = []
     actions = []
 
     # Iterate over the number of trajectories to collect
-    for _ in range(args.n_games):
+    for n in tqdm(range(args.n_games)):
+        print(f"Starting game {n + 1}...")
         traj_states = []
         traj_actions = []
         done = False
@@ -56,7 +56,6 @@ def record_user(args):
             traj_actions.append(torch.tensor(action))
             obs, reward, done, _, info = env.step(action)
             current_state = obs
-            clock.tick(20)
         states += traj_states
         actions += traj_actions
     # Make state and action tensors for saving
