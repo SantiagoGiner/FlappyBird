@@ -3,6 +3,8 @@ Harvard CS 184 Final Project, Fall 2023
 
 Uses the [flappy-bird-gymnasium](https://github.com/markub3327/flappy-bird-gymnasium) environment
 
+<img width="400" alt="flappy-bird-res" src="https://github.com/SantiagoGiner/FlappyBird/assets/70669841/7ffabaf3-5286-4ecf-b52b-c02eac0feb3e">
+
 To get started, run:  
 * `conda create -n 184-project -c conda-forge -y python=3.11`
 * `conda activate 184-project`
