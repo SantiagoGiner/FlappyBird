@@ -1,3 +1,4 @@
+opencv-python
 gymnasium
 flappy-bird-gymnasium
 stable-baselines3
@@ -7,3 +8,4 @@ opencv-python
 argparse
 torch
 tqdm
+torchvision
