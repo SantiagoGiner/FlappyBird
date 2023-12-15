@@ -35,9 +35,9 @@ def linear_schedule(initial_value: float) -> Callable[[float], float]:
 vec_env = make_vec_env("FlappyBird-v0", n_envs=1)
 
 logger = configure(LOGGING_PATH, ["stdout", "csv"])
-model = ppo("mlppolicy", vec_env, learning_rate=linear_schedule(0.001), verbose=1)
+model = PPO("MlpPolicy", vec_env, verbose=1)
 model.set_logger(logger)
-model.learn(total_timesteps=250000)
+model.learn(total_timesteps=2500000)
 model.save("models/ppo_flappybird")
 
 plot_ppo_results()
