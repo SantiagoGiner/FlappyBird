@@ -9,3 +9,4 @@ argparse
 torch
 tqdm
 torchvision
+pandas
