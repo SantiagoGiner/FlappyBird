@@ -4,7 +4,7 @@ import flappy_bird_gymnasium
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_util import make_vec_env
 
-from convnet_wrapper import ConvNetWrapper
+from convnet_wrapper import ResNetWrapper, ConvNetWrapper
 
 def make_wrapped_env():
     env = gym.make("FlappyBird-v0", render_mode="rgb_array")
