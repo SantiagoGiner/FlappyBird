@@ -5,6 +5,10 @@ Uses the [flappy-bird-gymnasium](https://github.com/markub3327/flappy-bird-gymna
 
 <img width="400" alt="flappy-bird-res" src="https://github.com/SantiagoGiner/FlappyBird/assets/70669841/7ffabaf3-5286-4ecf-b52b-c02eac0feb3e">
 
+Check out [our paper](https://drive.google.com/file/d/1HYpYvKdjh9Y-aS0YRDdeYHeYGywLcYL_/view?usp=sharing) summarizing our findinds
+<img width="790" alt="Screenshot 2024-05-16 at 3 40 26 PM" src="https://github.com/SantiagoGiner/FlappyBird/assets/70669841/b691011f-cd06-416e-946a-07a24a3fb59c">
+
+## Usage
 To get started, run:  
 * `conda create -n 184-project -c conda-forge -y python=3.11`
 * `conda activate 184-project`
